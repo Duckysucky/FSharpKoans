@@ -25,7 +25,7 @@ type Book =
 module ``07: On the Record`` =
     [<Test>]
     let ``01 Creating records`` () =
-        let myRecord = __
+        let myRecord = {Title ="Steelheart"; Author = "Brandon Sanderson"; Year = 2013}
         myRecord.Title |> should equal "Steelheart"
         myRecord.Author |> should equal "Brandon Sanderson"
         myRecord.Year |> should equal 2013
@@ -56,13 +56,13 @@ module ``07: On the Record`` =
             | { Name="Pikachu"; Attack=a } -> a/2
             | { Name="Raichu"; Attack=a } -> a/3
             | { Attack=blah; Defense=lol } -> (blah + lol) / 2
-        result |> should equal __
+        result |> should equal 30
 
     [<Test>]
     let ``05 Accessing record members using dot syntax`` () =
         let book = { Title="Tigana"; Author="Guy Gavriel Kay"; Year=1990 }
-        let k = __
-        let j = __
+        let k = book.Title
+        let j = book.Year
         k |> should equal "Tigana"
         j |> should equal 1990
 
@@ -72,6 +72,6 @@ module ``07: On the Record`` =
         let second = { first with Title="A Clash of Kings"; Year=first.Year+2 } // <-- Pssst - see what I did here?
         let third = { second with Title="A Storm of Swords"; Year=2000 }
         let {Year=y0}, {Year=y1}, {Year=y2} = first, second, third
-        y0 |> should equal __
-        y1 |> should equal __
-        y2 |> should equal __
+        y0 |> should equal 1996
+        y1 |> should equal 1998
+        y2 |> should equal 2000
