@@ -24,7 +24,7 @@ module ``09: Advanced pattern-matching`` =
             | "sunset" -> "transition"
             | FILL__ME_IN
             | FILL__ME_IN
-            | FILL__ME_IN -> "failure"
+            | "Bell's"|"vodka"|"Johnny Walker" -> "failure"
             | _ -> "lolwut"
         f "lol" |> should equal "yolo"
         f "wut" |> should equal "yolo"
