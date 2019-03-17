@@ -46,14 +46,14 @@ module ``08: The Good Kind of Discrimination`` =
             | BSc (_, ComputerScience) | BSc (ComputerScience, _) -> "Good choice!"
             | BSc _ -> "!!SCIENCE!!"
             | BPharm -> "Meh, it's OK."
-            | FILL_ME_IN -> "Money, money, money."
-            | FILL_ME_IN -> "A thinker, eh?"
-        randomOpinion __ |> should equal "Good choice!"
-        randomOpinion __ |> should equal "!!SCIENCE!!"
+            | BCom (_, Management) | BCom (Management, _) -> "Money, money, money."
+            | BA (Linguistics, Philosophy) -> "A thinker, eh?"
+        randomOpinion (BSc (ComputerScience, Linguistics)) |> should equal "Good choice!"
+        randomOpinion (BSc (Linguistics, Philosophy)) |> should equal "!!SCIENCE!!"
         randomOpinion (BCom (Management, Economics)) |> should equal "Money, money, money."
         randomOpinion (BCom (Linguistics, Management)) |> should equal "Money, money, money."
         randomOpinion (BA (Linguistics, Philosophy)) |> should equal "A thinker, eh?"
-        randomOpinion __ |> should equal "Meh, it's OK."
+        randomOpinion BPharm |> should equal "Meh, it's OK."
 
     type EquipmentStatus =
     | Available
@@ -75,5 +75,5 @@ module ``08: The Good Kind of Discrimination`` =
             match x with
             | Empty -> 0
             | Node (_, a, b) -> 1 + max (depth a) (depth b)
-        let a = _   // <-- you may want to spread this over multiple lines and/or let-bindings ...!
+        let a = __   // <-- you may want to spread this over multiple lines and/or let-bindings ...!
         depth a |> should equal 4
