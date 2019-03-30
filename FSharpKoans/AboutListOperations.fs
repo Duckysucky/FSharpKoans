@@ -260,9 +260,9 @@ or something else), it's likely that you'll be able to use a fold.
         let fold (f : 'a -> 'b -> 'a) (initialState : 'a) (xs : 'b list) : 'a =
            let rec len lis d =  // write a function to do a fold.
             match lis with
-            |[] -> f
-            |x::lis -> len ((f x)::lis)
-           len xs 
+            |[] -> d
+            |x::lis -> len lis (f x)
+           __
         fold (+) 0 [1;2;3;4] |> should equal 10
         fold (*) 2 [1;2;3;4] |> should equal 48
         fold (fun state item -> sprintf "%s %s" state item) "items:" ["dog"; "cat"; "bat"; "rat"]
@@ -386,9 +386,9 @@ or something else), it's likely that you'll be able to use a fold.
             | [] -> None
             | x::lis -> 
               match p x with 
-              |Some x -> (out :: Some x)
-              |_ -> len (lis) []
-          len xs []*)         
+              |Some x -> __
+              |_ -> len (lis) []*)
+           __      
         let f x =
             match x<=45 with
             | true -> Some(x*2)
@@ -405,15 +405,12 @@ or something else), it's likely that you'll be able to use a fold.
 
     [<Test>]
     let ``24 mapi: like map, but passes along an item index as well`` () =
-        let mapi (f : int -> 'a -> 'b) (xs : 'a list) : 'b list =
-          let rec len f lis  =  // Does this: https://msdn.microsoft.com/en-us/library/ee353425.aspx
+        let mapi (f : int -> 'a -> 'b) (xs : 'a list) : 'b list = 
+          let rec len lis i out  =  // Does this: https://msdn.microsoft.com/en-us/library/ee353425.aspx
             match lis with
-            | [] -> List.rev(out1), List.rev(out2)
-            | x::lis -> 
-              match f x with 
-              |true -> len lis ((x::out1),out2)
-              |_ -> len (lis) (out1, (x::out2))
-          len xs ([],[])     
+            | [] -> List.rev(out)
+            | x::lis -> len lis (i+1) (f i x ::out)
+          len xs 0 []   
         mapi (fun i x -> -i, x+1) [9;8;7;6] |> should equal [0,10; -1,9; -2,8; -3,7]
         let hailstone i t =
             match i%2 with
